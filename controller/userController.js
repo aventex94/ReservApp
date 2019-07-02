@@ -1,48 +1,61 @@
 const models = require('../models');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 module.exports = {
-    v1:{
-        getAllUsers:getAllUsers,
-        getUserById:getUserById,
-        createUser:createUser,
+    v1: {
+        getAllUsers: getAllUsers,
+        getUserById: getUserById,
+        createUser: createUser,
+        authenticate: authenticate,
     },
-    v2:{
-        
+    v2: {
+
     }
 };
 
-function getAllUsers(req,res,next){
+function authenticate(req, res) {
+    const privateKey = fs.readFileSync('private.key', 'utf8');
+    models.User.findByPk(req.params.id).then((user) => {
+        var token = jwt.sign(user, 'shhhhh');
+        res.send(token)
+
+    }).catch((err) => {
+        res.send("LALA");
+    })
+}
+function getAllUsers(req, res, next) {
     models.User.findAll({
-        atrributes:['uid'],
-        include:[{
+        atrributes: ['uid'],
+        include: [{
             model: models.Profile,
-            
-            atrributes:['pid','nombre'],
+
+            atrributes: ['pid', 'nombre'],
         }]
-    }).then((users)=>{
+    }).then((users) => {
         res.status(200).send(users)
-    }).catch(()=>{
+    }).catch(() => {
         console.log("Algo Fallo");
     });
 }
-function getUserById(req,res){
-    models.User.findByPk(req.params.id).then((user)=>{
+function getUserById(req, res) {
+    models.User.findByPk(req.params.id).then((user) => {
         res.send(user);
-    }).catch((err)=>{
+    }).catch((err) => {
         res.send(err);
     })
 }
-function createUser(req,res){
+function createUser(req, res) {
     models.User.create({
-        name:req.body.name,
-        lastName:req.body.lastname,
-        email:req.body.email,
-        password:req.body.password,
-        profileId:req.body.profileid,
-        
-    }).then(()=>{
+        name: req.body.name,
+        lastName: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password,
+        profileId: req.body.profileid,
+
+    }).then(() => {
         res.status(200).send("USER CREATED");
-    }).catch((err)=>{
+    }).catch((err) => {
         console.log(err);
     })
 }
