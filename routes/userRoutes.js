@@ -8,5 +8,5 @@ const validateUser = require('../actions/actionUser')
 userRoutes.get('/users',userController.v1.getAllUsers);
 userRoutes.get('/user/:id',userController.v1.getUserById);
 userRoutes.post('/userCreate',validateUser.v1.validateBodyPost,userController.v1.createUser);
-userRoutes.get('/authenticate/:1',userController.v1.authenticate);
+userRoutes.post('/authenticate',userController.v1.authenticate);
 module.exports = userRoutes;

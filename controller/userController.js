@@ -2,26 +2,33 @@ const models = require('../models');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
+
 module.exports = {
     v1: {
         getAllUsers: getAllUsers,
         getUserById: getUserById,
         createUser: createUser,
         authenticate: authenticate,
-    },
-    v2: {
-
     }
 };
 
 function authenticate(req, res) {
-    const privateKey = fs.readFileSync('private.key', 'utf8');
-    models.User.findByPk(req.params.id).then((user) => {
-        var token = jwt.sign(user, 'shhhhh');
-        res.send(token)
+    // const privateKey = fs.readFileSync('private.key', 'utf8');
+    var email = req.body.email;
+    var pass = req.body.password;
+    var privateKey = fs.readFileSync('privatekey.pem');
+    models.User.findOne({ where: { email: email, password: pass } }).then((user) => {
+        
+        jwt.sign({user:user}, privateKey,{ algorithm: 'RS256' }, function(err, token) {
+            if(err){
+                res.send(err);
+            }else{
+                res.status(200).send(token);
+            }
+          });
 
     }).catch((err) => {
-        res.send("LALA");
+        res.status(404).send(err);
     })
 }
 function getAllUsers(req, res, next) {

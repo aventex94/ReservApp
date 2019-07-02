@@ -5,6 +5,8 @@ const body=require('body-parser');
 const models = require('./models');
 
 app.use(body.json());
+app.use(body.urlencoded({ extended: false }));
+
 app.use('/',userRouter);
 app.listen(3002,()=>{
     models.sequelize.sync({});
