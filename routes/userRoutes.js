@@ -9,4 +9,5 @@ userRoutes.get('/users',userController.v1.getAllUsers);
 userRoutes.get('/user/:id',userController.v1.getUserById);
 userRoutes.post('/userCreate',validateUser.v1.validateBodyPost,userController.v1.createUser);
 userRoutes.post('/authenticate',userController.v1.authenticate);
+userRoutes.post('/verificarToken',userController.v1.verificarToken);
 module.exports = userRoutes;

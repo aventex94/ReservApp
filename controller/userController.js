@@ -9,6 +9,7 @@ module.exports = {
         getUserById: getUserById,
         createUser: createUser,
         authenticate: authenticate,
+        verificarToken: verificarToken,
     }
 };
 
@@ -16,16 +17,17 @@ function authenticate(req, res) {
     // const privateKey = fs.readFileSync('private.key', 'utf8');
     var email = req.body.email;
     var pass = req.body.password;
-    var privateKey = fs.readFileSync('privatekey.pem');
+    var privateKey = fs.readFileSync('jwtRS256.key');
     models.User.findOne({ where: { email: email, password: pass } }).then((user) => {
-        
-        jwt.sign({user:user}, privateKey,{ algorithm: 'RS256' }, function(err, token) {
-            if(err){
+
+        jwt.sign({ user: user }, privateKey, { algorithm: 'RS256' }, function (err, token) {
+            if (err) {
                 res.send(err);
-            }else{
+            } else {
                 res.status(200).send(token);
+
             }
-          });
+        });
 
     }).catch((err) => {
         res.status(404).send(err);
@@ -65,4 +67,15 @@ function createUser(req, res) {
     }).catch((err) => {
         console.log(err);
     })
+}
+function verificarToken(req, res) {
+    const token = req.headers.authorization;
+    var cert = fs.readFileSync('jwtRS256.key');
+    jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, decoded) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(decoded.foo);
+        }
+    });
 }
