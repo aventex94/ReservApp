@@ -1,30 +1,15 @@
 'use strict';
-
 const config = require('./config');
 const _ = require('lodash');
 const find = require('find');
 
 module.exports = {
-    loadRoutes: loadRoutes,
     log: log
 };
 
 
 
-/**
- * Load all routes files
- * @param {} app
- */
-function loadRoutes(path, app) {
-    // Find all routes files
-    const files = find.fileSync(path + '/../');
 
-    files.forEach((file) => {
-        
-        log(`Load route file: ${file}`);
-        require(file)(app);
-    });
-}
 
 /**
  * Create a log to each element in args

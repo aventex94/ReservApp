@@ -3,24 +3,15 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const util = require('./loadRoutesAndLogs');
+const util = require('./loadRoutes');
+const userRoutes = require('../routes/userRoutes')
 
 // Set up the express app
-const app = express()
+const app = express();
 
-// Log requests to the console.
+
 app.use(logger('dev'));
-
-// Parse incoming requests data (https://github.com/expressjs/body-parser)
+app.use(userRoutes)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// Load all routes files from resources folder
-util.loadRoutes(__dirname, app);
-
-// Setup a default catch-all route that sends back a welcome message in JSON format.
-/*app.get('*', (req, res) => res.status(200).send({
-    message: 'Bienvenido al servidor.',
-}));*/
-
 module.exports = app;

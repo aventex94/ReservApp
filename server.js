@@ -21,5 +21,6 @@ models.sequelize.sync().then(function () {
         console.info(`WebAPI server running at ${url}`);
         console.info(`  >>> start: ${new Date()}`);
         console.info(line + '\n');
+        
     });
 })
