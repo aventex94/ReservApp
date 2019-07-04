@@ -20,7 +20,7 @@ function authenticate(req, res) {
     var privateKey = fs.readFileSync('jwtRS256.key');
     models.User.findOne({ where: { email: email, password: pass } }).then((user) => {
 
-        jwt.sign({ user: user }, privateKey, { algorithm: 'RS256' }, function (err, token) {
+        jwt.sign({ user: user }, privateKey, { algorithm: 'HS384' }, function (err, token) {
             if (err) {
                 res.send(err);
             } else {
@@ -71,11 +71,11 @@ function createUser(req, res) {
 function verificarToken(req, res) {
     const token = req.headers.authorization;
     var cert = fs.readFileSync('jwtRS256.key');
-    jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, decoded) {
-        if (err) {
+    jwt.verify(token, cert, { algorithms:'HS384' }, function (err, decoded) {
+       if(err){
             res.send(err);
-        } else {
-            res.send(decoded.foo);
-        }
+       }else{
+        res.send(decoded)
+       }
     });
 }

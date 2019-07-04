@@ -1,14 +1,25 @@
-const express = require('express');
-const app = express();
-const userRouter = require('./routes/userRoutes') 
-const body=require('body-parser');
+'use strict';
+
+// This will be our application entry. We'll setup our server here.
+const http = require('http');
+const app = require('./core/app'); // The express app we just created
+const config = require('./core/config');
 const models = require('./models');
 
-app.use(body.json());
-app.use(body.urlencoded({ extended: false }));
 
-app.use('/',userRouter);
-app.listen(3002,()=>{
-    models.sequelize.sync({});
-    console.log("Servidor Corriendo");
-});
+const server = http.createServer(app);
+
+models.sequelize.sync().then(function () {
+    /**
+   * Listen on provided port, on all network interfaces.
+   */
+    server.listen(config.port, function() {
+        const url = `${config.hostname}:${config.port}${config.basePath}`;
+        const line = (new Array(80)).join('_');
+    
+        console.info(line);
+        console.info(`WebAPI server running at ${url}`);
+        console.info(`  >>> start: ${new Date()}`);
+        console.info(line + '\n');
+    });
+})
