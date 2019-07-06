@@ -3,12 +3,19 @@ const userRoutes = express.Router();
 const userController = require('../controller/userController')
 const validateUser = require('../actions/actionUser')
 const config = require('../core/config')
+const securityControlle = require('../controller/securityController');
 const basePath = config.basePath + '/users';
 
 
-userRoutes.get(basePath,userController.v1.getAllUsers); //utilizar este como base
-userRoutes.get('/user/:id',userController.v1.getUserById);
-userRoutes.post('/userCreate',validateUser.v1.validateBodyPost,userController.v1.createUser);
-userRoutes.post('/authenticate',userController.v1.authenticate);
-userRoutes.post('/verificarToken',userController.v1.verificarToken);
+userRoutes.get(basePath,securityControlle.v1.validate,userController.v1.getAllUsers); 
+userRoutes.get(basePath + '/:1',securityControlle.v1.validate,userController.v1.getUserById);
+userRoutes.post(basePath + '/create',validateUser.v1.validateBodyPost,userController.v1.createUser);
+userRoutes.post(basePath + '/login',securityControlle.v1.authenticate);
+
+
+
+
+
+
+
 module.exports = userRoutes;

@@ -1,6 +1,4 @@
 const models = require('../models');
-const jwt = require('jsonwebtoken');
-const fs = require('fs');
 
 
 module.exports = {
@@ -8,31 +6,11 @@ module.exports = {
         getAllUsers: getAllUsers,
         getUserById: getUserById,
         createUser: createUser,
-        authenticate: authenticate,
-        verificarToken: verificarToken,
+        
     }
 };
 
-function authenticate(req, res) {
-    // const privateKey = fs.readFileSync('private.key', 'utf8');
-    var email = req.body.email;
-    var pass = req.body.password;
-    var privateKey = fs.readFileSync('jwtRS256.key');
-    models.User.findOne({ where: { email: email, password: pass } }).then((user) => {
 
-        jwt.sign({ user: user }, privateKey, { algorithm: 'HS384' }, function (err, token) {
-            if (err) {
-                res.send(err);
-            } else {
-                res.status(200).send(token);
-
-            }
-        });
-
-    }).catch((err) => {
-        res.status(404).send(err);
-    })
-}
 function getAllUsers(req, res, next) {
     models.User.findAll({
         atrributes: ['uid'],
@@ -68,14 +46,4 @@ function createUser(req, res) {
         console.log(err);
     })
 }
-function verificarToken(req, res) {
-    const token = req.headers.authorization;
-    var cert = fs.readFileSync('jwtRS256.key');
-    jwt.verify(token, cert, { algorithms:'HS384' }, function (err, decoded) {
-       if(err){
-            res.send(err);
-       }else{
-        res.send(decoded)
-       }
-    });
-}
+
