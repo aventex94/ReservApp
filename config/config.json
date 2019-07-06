@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "root",
-    "password": "",
+    "username": "administrador",
+    "password": "42467766",
     "database": "symfony",
     "host": "localhost",
     "port":"3306",

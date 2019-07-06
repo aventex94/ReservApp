@@ -3,7 +3,7 @@ const userRoutes = express.Router();
 const userController = require('../controller/userController')
 const validateUser = require('../actions/actionUser')
 const config = require('../core/config')
-const basePath = config.basePath + '/users/';
+const basePath = config.basePath + '/users';
 
 
 userRoutes.get(basePath,userController.v1.getAllUsers); //utilizar este como base
