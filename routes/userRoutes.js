@@ -8,9 +8,16 @@ const basePath = config.basePath + '/users';
 
 
 userRoutes.get(basePath,securityController.v1.validate,userController.v1.getAllUsers); 
-userRoutes.get(basePath + '/:1',securityController.v1.validate,userController.v1.getUserById);
+
+userRoutes.get(basePath + '/:id',securityController.v1.validate,userController.v1.getUserById);
+
 userRoutes.post(basePath + '/create',validateUser.v1.validateBodyPost,userController.v1.createUser);
+
 userRoutes.post(basePath + '/login',securityController.v1.authenticate);
+
+userRoutes.put(basePath + '/update/:id',validateUser.v1.validateBodyPut,userController.v1.updateUser);
+
+userRoutes.delete(basePath + '/delete/:id',userController.v1.deleteUser);
 
 
 

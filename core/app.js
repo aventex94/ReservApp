@@ -3,7 +3,7 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-const util = require('./loadRoutes');
+
 const userRoutes = require('../routes/userRoutes')
 
 // Set up the express app

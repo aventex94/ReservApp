@@ -39,7 +39,7 @@ function validate(req, res) {
     var cert = fs.readFileSync('jwtRS256.key');
     jwt.verify(token, cert, { algorithms: 'HS384' }, function (err, decoded) {
         if (err) {
-            res.send(err);
+            res.status(404).send(err);
         } else {
             res.send(decoded)
         }
