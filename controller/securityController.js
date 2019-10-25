@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const models = require('../models');
 module.exports = {
     v1: {
         authenticate: authenticate,
@@ -11,6 +12,7 @@ module.exports = {
 function authenticate(req, res) {
 
     var email = req.body.email;
+   
     var pass = req.body.password;
     var privateKey = fs.readFileSync('jwtRS256.key');
     models.User.findOne({ where: { email: email, password: pass } }).then((user) => {
@@ -24,7 +26,10 @@ function authenticate(req, res) {
                     }
                 );
             } else {
-                res.status(200).send(token);
+                res.status(200).send({
+                    "user":user,
+                    "token":token,
+                });
 
             }
         });
