@@ -10,10 +10,9 @@ module.exports = {
 
 
 function authenticate(req, res) {
-
     var email = req.body.email;
-   
     var pass = req.body.password;
+    
     var privateKey = fs.readFileSync('jwtRS256.key');
     models.User.findOne({ where: { email: email, password: pass } }).then((user) => {
 
@@ -35,7 +34,7 @@ function authenticate(req, res) {
         });
 
     }).catch((err) => {
-        res.status(404).send("sdas");
+        res.status(403).send(err);
     })
 }
 
