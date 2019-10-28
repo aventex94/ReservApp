@@ -10,7 +10,7 @@ const userRoutes = require('../routes/userRoutes')
 // Set up the express app
 const app = express();
 var corsOptions={
-    "origin" : '*',
+    "origin" : 'http://localhost:8100',
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "optionsSuccessStatus": "200" ,
 }
