@@ -19,7 +19,7 @@ module.exports = {
  */
 function getAllUsers(req, res, next) {
     models.User.findAll({
-        atrributes: ['uid'],
+        attributes: ['uid'],
         include: [{
             model: models.Profile,
 
