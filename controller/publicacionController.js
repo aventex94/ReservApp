@@ -17,7 +17,11 @@ module.exports = {
 function getAllPublicaciones(req,res){
     models.Publicacion.findAll({
         attributes:['id','titulo','contenido'],
+        include: [{
+            model: models.Comentario,
 
+            atrributes: ['id', 'contenido'],
+        }]
     }).then((publicaciones)=>{
         res.status(200).send(publicaciones);
     }).catch((err)=>{

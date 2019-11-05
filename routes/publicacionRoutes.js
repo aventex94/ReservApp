@@ -9,5 +9,4 @@ publicacionRouter.get(basePath,publicacionController.v1.getAllPublicaciones);
 
 
 
-
 module.exports = publicacionRouter;
