@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         
     });
-    User.associate = function(models) {
+    Publicacion.associate = function(models) {
         //models.User.belongsTo(models.Profile);
       };
-    return User;
+    return Publicacion;
 };
