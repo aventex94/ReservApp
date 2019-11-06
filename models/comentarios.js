@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
     Comentario.associate = function(models) {
-       
+       models.Comentario.belongsTo(models.User);
       };
     return Comentario;
 };

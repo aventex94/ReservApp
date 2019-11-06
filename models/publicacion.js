@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
         
     });
     Publicacion.associate = function(models) {
-        //models.User.belongsTo(models.Profile);
         models.Publicacion.hasMany(models.Comentario);
       };
     return Publicacion;

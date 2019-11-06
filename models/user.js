@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
     User.associate = function(models) {
-        models.User.belongsTo(models.Profile);
+        models.User.hasMany(models.Publicacion);
+        models.User.hasMany(models.Comentario);
       };
     return User;
 };

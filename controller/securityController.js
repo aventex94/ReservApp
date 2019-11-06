@@ -12,7 +12,6 @@ module.exports = {
 function authenticate(req, res) {
     var email = req.body.email;
     var pass = req.body.password;
-    
     var privateKey = fs.readFileSync('jwtRS256.key');
     models.User.findOne({ where: { email: email, password: pass } }).then((user) => {
 
