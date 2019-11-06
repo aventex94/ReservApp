@@ -37,8 +37,8 @@ function createPublicacion(req,res){
             titulo:req.body.titulo,
             contenido:req.body.contenido,
             UserUid:req.body.user,
-    }).then(()=>{
-        res.status(200).send("SE LOGRO");
+    }).then((publicacion)=>{
+        res.status(200).send(publicacion);
     }).catch((err)=>{
         res.status(500).send(err);
     })
