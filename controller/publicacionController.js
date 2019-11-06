@@ -4,6 +4,7 @@ const models = require('../models');
 module.exports = {
     v1: {
         getAllPublicaciones:getAllPublicaciones,
+        createPublicacion:createPublicacion,
 
     }
 };
@@ -29,4 +30,17 @@ function getAllPublicaciones(req,res){
     }).catch((err)=>{
         console.log(err);
     });
+}
+
+function createPublicacion(req,res){
+    models.Publicacion.create({
+            titulo:req.body.titulo,
+            contenido:req.body.contenido,
+            UserUid:req.body.user,
+    }).then(()=>{
+        res.status(200).send("SE LOGRO");
+    }).catch((err)=>{
+        res.status(500).send(err);
+    })
+    
 }
