@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const userRoutes = require('../routes/userRoutes')
 const publicacionRoutes = require('../routes/publicacionRoutes');
+const comentarioRoutes = require('../routes/comentarioRoutes');
 // Set up the express app
 const app = express();
 var corsOptions={
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(userRoutes);
 app.use(publicacionRoutes);
+app.use(comentarioRoutes);
 
 
 module.exports = app;
