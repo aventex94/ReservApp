@@ -10,9 +10,8 @@ module.exports = {
 function createComentario(req,res){
     models.Comentario.create({
         contenido:req.body.contenido,
-        UserUid: req.body.user,
         PublicacionId:req.body.PublicacionId,
-       
+        UserUid: req.body.UserUid,
     }).then((comentario)=>{
         
         res.status(200).send(comentario);
