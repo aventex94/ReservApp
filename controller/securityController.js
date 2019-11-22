@@ -12,30 +12,36 @@ module.exports = {
 function authenticate(req, res) {
     var email = req.body.email;
     var pass = req.body.password;
-    var privateKey = fs.readFileSync('jwtRS256.key');
     models.User.findOne({ where: { email: email, password: pass } }).then((user) => {
+    var privateKey = fs.readFileSync('jwtRS256.key');
+        if(user != null){
+            jwt.sign({ user: user }, privateKey, { algorithm: 'HS384' }, function (err, token) {
+                if (!token) {
+                    res.send(
+                        {
+                            "access": "d",
+                            "cause": "miss token",
+                        }
+                    );
+                } else {
+                    res.status(200).send({
+                        "user":user,
+                        "token":token,
+                    });
 
-        jwt.sign({ user: user }, privateKey, { algorithm: 'HS384' }, function (err, token) {
-            if (!token) {
-                res.send(
-                    {
-                        "access": "d",
-                        "cause": "miss token",
-                    }
-                );
-            } else {
-                res.status(200).send({
-                    "user":user,
-                    "token":token,
-                });
-
-            }
-        });
-
+                }
+            });
+        }else{
+            res.status(403).send("Usuario invalido");
+        }
     }).catch((err) => {
-        res.status(403).send(err);
+        res.status(403).send("Argumentos invalidos");
     })
 }
+            
+        
+
+
 
 function validate(req, res) {
     const token = req.headers.authorization;
