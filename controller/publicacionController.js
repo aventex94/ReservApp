@@ -20,10 +20,8 @@ function getAllPublicaciones(req,res){
         attributes:['id','titulo','contenido'],
         include: [{
             model: models.Comentario,include:[{
-                model: models.User
-            }]
-
-            
+                model: models.User, attributes: ['name'],
+            }] 
         }]
     }).then((publicaciones)=>{
         res.status(200).send(publicaciones);
