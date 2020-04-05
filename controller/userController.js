@@ -18,6 +18,7 @@ module.exports = {
  * @param {Object} res - http.ServerResponse
  */
 function getAllUsers(req, res, next) {
+    res.status(200).send("HOLA MUNDO");
     models.User.findAll({
         attributes: ['uid'],
         include: [{
